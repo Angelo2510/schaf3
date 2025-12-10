@@ -1,4 +1,7 @@
 #include <iostream>
+#include <fstream>
+#include <vector>
+#include <iomanip>
 #include <autodiff.hpp>
 
 
@@ -46,5 +49,54 @@ int main()
 
     std::cout << "sin(addx) = " << sin(adx) << std::endl;
   }
+  std::vector<AutoDiff<2>> vec{};
+  LegendrePolynomials(1, adx, vec);
+  plot_data()
+
   return 0;
+}
+
+
+int plot_data()
+{
+    const int max_degree = 5;
+    const int num_points = 201;   // number of sample points in [-1, 1]
+    const double x_min = -1.0;
+    const double x_max =  1.0;
+
+    std::ofstream out("legendre_data.txt");
+    if (!out)
+    {
+        std::cerr << "Error: could not open output file.\n";
+        return 1;
+    }
+
+    // Write header
+    out << std::setprecision(15);
+    out << "x";
+    for (int n = 0; n <= max_degree; ++n)
+        out << " P" << n;
+    out << "\n";
+
+    std::vector<double> P;
+
+    for (int i = 0; i < num_points; ++i)
+    {
+        double x = x_min + (x_max - x_min) * i / (num_points - 1);
+
+        // Compute Legendre polynomials up to degree max_degree at point x
+        ASC_ode::LegendrePolynomials(max_degree, x, P);
+
+        // Write x and all P_n(x)
+        out << x;
+        for (int n = 0; n <= max_degree; ++n)
+        {
+            out << " " << P[n];
+        }
+        out << "\n";
+    }
+
+    out.close();
+    std::cout << "Data written to legendre_data.txt\n";
+    return 0;
 }
