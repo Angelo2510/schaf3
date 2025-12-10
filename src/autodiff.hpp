@@ -90,12 +90,15 @@ namespace ASC_ode
     return result;
   }
 
+  using std::sin;
+  using std::cos;
+
   template <size_t N, typename T = double>
   AutoDiff<N, T> sin(const AutoDiff<N, T> &a)
   {
-    AutoDiff<N, T> result(std::sin(a.value()));
+    AutoDiff<N, T> result(sin(a.value()));
     for (size_t i = 0; i < N; i++)
-      result.deriv()[i] = std::cos(a.value()) * a.deriv()[i];
+      result.deriv()[i] = cos(a.value()) * a.deriv()[i];
     return result;
   }
 
