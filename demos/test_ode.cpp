@@ -42,9 +42,17 @@ int main()
 
   Vector<> y = { 1, 0 };  // initializer list
   auto rhs = std::make_shared<MassSpring>(1.0, 1.0);
-  
-  //ImprovedEuler stepper(rhs);
-  //ExplicitEuler stepper(rhs);
+
+/*
+  Vector<> Radau(3), RadauWeight(3);
+  GaussRadau (Radau, RadauWeight);
+  // not sure about weights, comput them via ComputeABfromC
+  cout << "Radau = " << Radau << ", weight = " << RadauWeight <<  endl;
+        Vector<> Gauss2c(2), Gauss3c(3);
+*/
+ 
+
+  // ExplicitEuler stepper(rhs);
   // ImplicitEuler stepper(rhs);
   CrankNicolson stepper(rhs);
 
