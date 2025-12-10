@@ -20,3 +20,32 @@ In short: **schaf3** aims to make solving ODEs + computing derivatives easier an
 ---
 
 ## 📦 What’s inside
+
+Features:
+
+-   Templated `AutoDiff<N, T>` types (for arbitrary dimension `N`)
+-   Basic operations: addition, multiplication, division, plus standard math (`sin`, `cos`, `exp`, …) for AD types
+-   Simple `Variable<I, T>` helper for initializing AD variables
+-   Sample code to export data and use Python + Matplotlib to plot values and derivatives
+
+---
+
+## 🛠️ Getting Started
+
+### Requirements
+
+-   A C++17 (or newer) compiler
+-   CMake (if you want to build demos)
+-   For demos using plotting: a working Python (≥ 3.7), plus `numpy` and `matplotlib` installed
+
+### Build and Run (C++ only)
+
+```bash
+git clone https://github.com/YourUsername/schaf3.git
+cd schaf3
+mkdir build && cd build
+cmake ..
+make
+# Then run any demo binary, e.g.:
+./demos/legendre_demo   # or whatever demo names you have
+```
