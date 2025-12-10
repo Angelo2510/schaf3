@@ -47,5 +47,8 @@ int main()
     std::cout << "sin(addx) = " << sin(adx) << std::endl;
     std::cout << "log(adx) = " << log(2) << std::endl;
   }
+
+
+  
   return 0;
 }
