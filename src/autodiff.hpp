@@ -90,33 +90,23 @@ namespace ASC_ode
     return result;
   }
 
-   template <size_t N, typename T = double>
-   AutoDiff<N, T> operator* (const AutoDiff<N, T>& a, const AutoDiff<N, T>& b)
-   {
-       AutoDiff<N, T> result(a.value() * b.value());
-       for (size_t i = 0; i < N; i++)
-          result.deriv()[i] = a.deriv()[i] * b.value() + a.value() * b.deriv()[i];
-       return result;
-   }
+  template <size_t N, typename T = double>
+  AutoDiff<N, T> sin(const AutoDiff<N, T> &a)
+  {
+    AutoDiff<N, T> result(std::sin(a.value()));
+    for (size_t i = 0; i < N; i++)
+      result.deriv()[i] = std::cos(a.value()) * a.deriv()[i];
+    return result;
+  }
 
-   template <size_t N, typename T = double>
-   AutoDiff<N, T> sin(const AutoDiff<N, T> &a)
-   {
-       AutoDiff<N, T> result(std::sin(a.value()));
-       for (size_t i = 0; i < N; i++)
-           result.deriv()[i] = std::cos(a.value()) * a.deriv()[i];
-       return result;
-   }
-
-   template <size_t N, typename T = double>
-   AutoDiff<N, T> cos(const AutoDiff<N, T> &a)
-   {
+  template <size_t N, typename T = double>
+  AutoDiff<N, T> cos(const AutoDiff<N, T> &a)
+  {
     AutoDiff<N, T> result(std::cos(a.value()));
     for (size_t i = 0; i < N; i++)
-          result.deriv()[i] = - std::sin(a.value()) * a.deriv()[i];
+      result.deriv()[i] = -std::sin(a.value()) * a.deriv()[i];
     return result;
-   }
-
+  }
 
   template <size_t N, typename T = double>
   AutoDiff<N, T> exp(const AutoDiff<N, T> &a)

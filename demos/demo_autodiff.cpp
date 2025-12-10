@@ -44,7 +44,7 @@ int main()
     // func'' = 2
     std::cout << "addx*addx = " << addx * addx << std::endl;
 
-    std::cout << "sin(addx) = " << sin(addx) << std::endl;
+    std::cout << "sin(addx) = " << sin(adx) << std::endl;
   }
   return 0;
 }
