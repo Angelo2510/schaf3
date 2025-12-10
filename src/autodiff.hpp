@@ -92,6 +92,8 @@ namespace ASC_ode
 
   using std::sin;
   using std::cos;
+  using std::exp;
+  using std::log;
 
   template <size_t N, typename T = double>
   AutoDiff<N, T> sin(const AutoDiff<N, T> &a)
@@ -105,22 +107,35 @@ namespace ASC_ode
   template <size_t N, typename T = double>
   AutoDiff<N, T> cos(const AutoDiff<N, T> &a)
   {
-    AutoDiff<N, T> result(std::cos(a.value()));
+    AutoDiff<N, T> result(cos(a.value()));
     for (size_t i = 0; i < N; i++)
-      result.deriv()[i] = -std::sin(a.value()) * a.deriv()[i];
+      result.deriv()[i] = -sin(a.value()) * a.deriv()[i];
     return result;
   }
 
   template <size_t N, typename T = double>
   AutoDiff<N, T> exp(const AutoDiff<N, T> &a)
   {
-    AutoDiff<N, T> result(std::exp(a.value()));
+    AutoDiff<N, T> result(exp(a.value()));
     for (size_t i = 0; i < N; i++)
     {
-      result.deriv()[i] = std::exp(a.value()) * a.deriv()[i];
+      result.deriv()[i] = exp(a.value()) * a.deriv()[i];
     }
     return result;
   }
+
+  template <size_t N, typename T = double>
+  AutoDiff<N, T> log(const AutoDiff<N, T> &a)
+  {
+    AutoDiff<N, T> result(log(a.value()));
+    for (size_t i = 0; i < N; i++)
+    {
+      result.deriv()[i] = (1/a.value()) * a.deriv()[i];
+    }
+    return result;
+  }
+
+
 } // namespace ASC_ode
 
 #endif

@@ -45,6 +45,7 @@ int main()
     std::cout << "addx*addx = " << addx * addx << std::endl;
 
     std::cout << "sin(addx) = " << sin(adx) << std::endl;
+    std::cout << "log(adx) = " << log(2) << std::endl;
   }
   return 0;
 }
