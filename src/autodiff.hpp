@@ -81,6 +81,15 @@ namespace ASC_ode
   template <size_t N, typename T = double>
   auto operator+(T a, const AutoDiff<N, T> &b) { return AutoDiff<N, T>(a) + b; }
 
+  template <size_t N, typename T>
+  AutoDiff<N, T> operator-(const AutoDiff<N, T> &a, const AutoDiff<N, T> &b)
+  {
+    AutoDiff<N, T> result(a.value() - b.value());
+    for (size_t i = 0; i < N; ++i)
+      result.deriv()[i] = a.deriv()[i] - b.deriv()[i];
+    return result;
+  }
+
   template <size_t N, typename T = double>
   AutoDiff<N, T> operator*(const AutoDiff<N, T> &a, const AutoDiff<N, T> &b)
   {
@@ -146,6 +155,24 @@ namespace ASC_ode
 
   
 
+  template <typename T>
+  void LegendrePolynomials(int n, T x, std::vector<T> &P)
+  {
+    if (n < 0)
+    {
+      P.clear();
+      return;
+    }
+    P.resize(n + 1);
+    P[0] = T(1);
+    if (n == 0)
+      return;
+    P[1] = x;
+    for (int k = 2; k <= n; ++k)
+    {
+      P[k] = ((T(2 * k - 1) * x * P[k - 1]) - T(k - 1) * P[k - 2]) / T(k);
+    }
+  }
 } // namespace ASC_ode
 
 #endif
