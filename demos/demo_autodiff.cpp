@@ -31,7 +31,7 @@ int main()
   double eps = 1e-8;
   std::cout << "numdiff df/dx = " << (func1(x + eps, y) - func1(x-eps, y)) / (2*eps) << std::endl;
   std::cout << "numdiff df/dy = " << (func1(x, y + eps) - func1(x, y-eps)) / (2*eps) << std::endl;
-  auto r = exp(ady);
+  auto r = adx/ady;
   std::cout << "EXP: " << r << std::endl;
 
 
