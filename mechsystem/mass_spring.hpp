@@ -51,12 +51,20 @@ public:
   std::array<Connector,2> connectors;
 };
 
+class DistanceConstraint
+{
+public:
+  double length;
+  std::array<Connector,2> connectors;
+};
+
 template <int D>
 class MassSpringSystem
 {
   std::vector<Fix<D>> m_fixes;
   std::vector<Mass<D>> m_masses;
   std::vector<Spring> m_springs;
+  std::vector<DistanceConstraint> m_constraints;
   Vec<D> m_gravity=0.0;
 public:
   void setGravity (Vec<D> gravity) { m_gravity = gravity; }
