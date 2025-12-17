@@ -1,6 +1,8 @@
-import sys
-sys.path.append('/Users/joachim/texjs/lva/IntroSC/ASC-ODE/build/mechsystem')
-sys.path.append('../build/mechsystem')
+import sys, os
+os.add_dll_directory(r"C:\msys64\ucrt64\bin")
+sys.path.insert(0, r"C:\Users\angel\Desktop\SciComp\schaf3\build\mechsystem")
+#sys.path.append('/Users/joachim/texjs/lva/IntroSC/ASC-ODE/build/mechsystem')
+#sys.path.append('../build/mechsystem')
 
 from mass_spring import *
 
