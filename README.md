@@ -70,7 +70,7 @@ auto f = x * sin(y);               // compute f and all derivatives simultaneous
 
 ```bash
 # Clone the repository
-git clone <your-repo-url>
+git clone https://github.com/Angelo2510/schaf3
 cd schaf3
 
 # Build with CMake
