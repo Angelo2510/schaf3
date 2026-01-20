@@ -1,32 +1,59 @@
-# schaf3 — ASC-ODE: A C++ Package for Solving Ordinary Differential Equations
+# schaf3 — ASC-ODE: Mechanical Systems + ODE Solver Library
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)]()
 
-_A lightweight, header-only (mostly) C++ library for ODE integration and automatic differentiation, plus sample usage / plotting tools._
+_A C++ library for solving ODEs with automatic differentiation, plus a 3D mass-spring-constraint system simulator with Python bindings and interactive visualization._
 
 ---
 
 ## 🚀 What is schaf3?
 
-schaf3 (ASC-ODE) is a C++ library designed to help you:
+**schaf3** (ASC-ODE) is a C++ library designed to help you:
 
--   Define and solve ordinary differential equations (ODEs) in a flexible way.
--   Use automatic differentiation (AD) to compute derivatives — enabling e.g. sensitivity analysis or Jacobians without manual calculus.
--   Easily switch between plain numeric types (e.g. `double`) and AD-enabled types, thanks to templated code.
--   Run demos that export data and visualize results using Python + Matplotlib (e.g. for polynomial examples or ODE trajectories).
+- **Simulate mechanical systems** — masses, springs, and rigid distance constraints in 2D/3D with Python bindings
+- **Solve ODEs** — multiple time-stepping schemes (Euler, Crank-Nicolson, Runge-Kutta, Newmark, generalized-α)
+- **Automatic differentiation** — compute derivatives and Jacobians without manual calculus
+- **Visualize in real-time** — Python integration with `pythreejs` for interactive 3D rendering in Jupyter notebooks
 
-In short: **schaf3** aims to make solving ODEs + computing derivatives easier and more expressive, without sacrificing performance or readability.
+Under the hood, it uses implicit time-stepping methods to handle stiff ODEs and rigid constraints, with automatic differentiation for computing Jacobians in the Newton solver. Perfect for scientific computing coursework, mechanical system prototyping, or experimenting with physics simulations.
 
 ---
 
-## 📦 What’s inside
+## 📦 Quick Example
 
-Features:
+```python
+from mass_spring import *
 
--   Templated `AutoDiff<N, T>` types (for arbitrary dimension `N`)
--   Basic operations: addition, multiplication, division, plus standard math (`sin`, `cos`, `exp`, …) for AD types
--   Simple `Variable<I, T>` helper for initializing AD variables
--   Sample code to export data and use Python + Matplotlib to plot values and derivatives
+# Create a pendulum
+mss = MassSpringSystem3d()
+mss.gravity = (0, 0, -9.81)
+
+fix = mss.add(Fix((0, 0, 1.0)))                    # anchor at top
+mass = mss.add(Mass(1.0, (0.1, 0, 0.0)))           # hanging mass
+mss.add(Spring(1.0, 100.0, (fix, mass)))           # spring connection
+
+# Simulate
+mss.simulate(dt=0.01, substeps=100)
+print(mass.pos, mass.vel)
+```
+
+### Springs vs. Constraints
+
+```python
+# Elastic spring (can stretch)
+mss.add(Spring(length, stiffness, (conn1, conn2)))
+
+# Rigid constraint (perfectly fixed distance)
+mss.add(DistanceConstraint(length, (conn1, conn2)))
+```
+
+### Automatic Differentiation (C++)
+
+```cpp
+AutoDiff<2> x = Variable<0>(2.0);  // x = 2, dx/dx = 1
+AutoDiff<2> y = Variable<1>(3.0);  // y = 3, dy/dy = 1
+auto f = x * sin(y);               // compute f and all derivatives simultaneously
+```
 
 ---
 
@@ -34,18 +61,91 @@ Features:
 
 ### Requirements
 
--   A C++17 (or newer) compiler
--   CMake (if you want to build demos)
--   For demos using plotting: a working Python (≥ 3.7), plus `numpy` and `matplotlib` installed
+- **C++ Compiler:** C++17 or newer (GCC, Clang, MSVC)
+- **CMake:** ≥ 3.20
+- **For Python bindings:** Python ≥ 3.8, `pybind11`
+- **For visualization:** `numpy`, `pythreejs` (for Jupyter notebooks)
 
-### Build and Run (C++ only)
+### Installation
 
 ```bash
-git clone https://github.com/YourUsername/schaf3.git
+# Clone the repository
+git clone <your-repo-url>
 cd schaf3
+
+# Build with CMake
 mkdir build && cd build
 cmake ..
-make
-# Then run any demo binary, e.g.:
-./demos/legendre_demo   # or whatever demo names you have
+cmake --build .
 ```
+
+### Try It Out
+
+```bash
+# Run C++ ODE demos
+./test_ode
+./demo_autodiff
+
+# Python mass-spring simulator
+python mechsystem/test_mass_spring.py
+
+# Jupyter notebooks with visualization
+jupyter notebook mechsystem/finale.ipynb
+```
+
+---
+
+## 📁 What's Inside
+
+```
+src/               ODE solvers, time steppers, automatic differentiation
+mechsystem/        Mass-spring simulator with Python bindings
+  ├── mass_spring.hpp/cpp      C++ implementation
+  ├── bind_mass_spring.cpp     Python bindings (pybind11)
+  ├── finale.ipynb             Demo: pendulums (springs vs constraints)
+  └── kreisel.ipynb            Demo: spinning top
+nanoblas/          Lightweight linear algebra
+demos/             C++ example programs
+```
+
+---
+
+## 🎯 Features
+
+**Mechanical Systems:**
+- 2D/3D masses, fixed anchors, springs, distance constraints
+- Gravity and external forces
+- Access to positions, velocities, masses
+- Python bindings for easy scripting
+
+**ODE Solvers (C++):**
+- Explicit/Implicit Euler, Crank-Nicolson, Runge-Kutta
+- Newmark and generalized-α for second-order ODEs
+- Template-based automatic differentiation
+
+**Visualization:**
+- Real-time 3D rendering in Jupyter with `pythreejs`
+- Interactive orbit controls
+- See examples in `mechsystem/*.ipynb`
+
+---
+
+## 📚 Example Notebooks
+
+- **finale.ipynb** — Compare springs vs constraints with single and double pendulums
+- **kreisel.ipynb** — Spinning top with rigid body constraints
+- **mass_spring.ipynb** — Basic mass-spring chain
+
+---
+
+## 🤔 Why not just use NGSolve?
+
+Because sometimes you want to simulate a pendulum without compiling a finite element library the size of a small planet.
+
+_(But seriously, if you need industrial-grade FEM: [NGSolve](https://ngsolve.org). This is for learning and fun.)_
+
+---
+
+## 📄 License
+
+MIT License — see [LICENSE](LICENSE)
