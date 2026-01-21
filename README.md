@@ -4,11 +4,15 @@
 
 _A C++ library for solving ODEs with automatic differentiation, plus a 3D mass-spring-constraint system simulator with Python bindings and interactive visualization._
 
-Victor Pawlek
-Angelo Stjepanovic
-Carlos Aleksandar Duenas Lopez
-Sebastian Wagner
-Fabian Senftner
+### Sebastian Wagner
+
+### Victor Pawlek
+
+### Angelo Stjepanovic
+
+### Carlos Aleksandar Duenas Lopez
+
+### Fabian Senftner
 
 ---
 
