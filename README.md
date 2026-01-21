@@ -6,13 +6,13 @@ _A C++ library for solving ODEs with automatic differentiation, plus a 3D mass-s
 
 ### Sebastian Wagner, 12307039
 
-### Victor Pawlek, 12320223
+### Victor Pawlek, 12320223 (already has done SciComp)
 
-### Angelo Stjepanovic, 12302549
+### Angelo Stjepanovic, 12302549 (already has done SciComp)
 
-### Carlos Aleksandar Duenas Lopez, 12308486
+### Carlos Aleksandar Duenas Lopez, 12308486 (already has done SciComp)
 
-### Fabian Senftner, 12307538
+### Fabian Senftner, 12307538 (already has done SciComp)
 
 ---
 
